@@ -6,10 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
@@ -108,6 +110,7 @@ public class WeekView extends View {
     private int mColumnGap = 10;
     private int mFirstDayOfWeek = Calendar.MONDAY;
     private int mTextSize = 12;
+    private int mEventIconSize = 12;
     private int mHeaderColumnPadding = 10;
     private int mHeaderColumnTextColor = Color.BLACK;
     private int mNumberOfVisibleDays = 3;
@@ -317,6 +320,7 @@ public class WeekView extends View {
             mHourHeight = a.getDimensionPixelSize(R.styleable.WeekView_hourHeight, mHourHeight);
             mMinHourHeight = a.getDimensionPixelSize(R.styleable.WeekView_minHourHeight, mMinHourHeight);
             mEffectiveMinHourHeight = mMinHourHeight;
+            mEventIconSize = a.getDimensionPixelSize(R.styleable.WeekView_eventIconSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mEventIconSize, context.getResources().getDisplayMetrics()));
             mMaxHourHeight = a.getDimensionPixelSize(R.styleable.WeekView_maxHourHeight, mMaxHourHeight);
             mTextSize = a.getDimensionPixelSize(R.styleable.WeekView_wvTextSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mTextSize, context.getResources().getDisplayMetrics()));
             mHeaderColumnPadding = a.getDimensionPixelSize(R.styleable.WeekView_headerColumnPadding, mHeaderColumnPadding);
@@ -808,6 +812,7 @@ public class WeekView extends View {
                         mEventBackgroundPaint.setColor(mEventRects.get(i).event.getColor() == 0 ? mDefaultEventColor : mEventRects.get(i).event.getColor());
                         canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundPaint);
                         drawEventTitle(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas, top, left);
+                        drawEventIcon(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas);
                     }
                     else
                         mEventRects.get(i).rectF = null;
@@ -889,6 +894,10 @@ public class WeekView extends View {
         int availableHeight = (int) (rect.bottom - originalTop - mEventPadding * 2);
         int availableWidth = (int) (rect.right - originalLeft - mEventPadding * 2);
 
+        if (event.getIconId() != 0) {
+            availableWidth -= mEventIconSize + mEventPadding;
+        }
+
         // Get text dimensions.
         StaticLayout textLayout = new StaticLayout(bob, mEventTextPaint, availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
@@ -915,6 +924,34 @@ public class WeekView extends View {
         }
     }
 
+
+    private void drawEventIcon(WeekViewEvent event, RectF rect, Canvas canvas) {
+        if (rect.right - rect.left - mEventPadding * 2 - mEventIconSize < 0) return;
+        if (rect.bottom - rect.top - mEventPadding * 2 - mEventIconSize < 0) return;
+
+        int iconId = event.getIconId();
+
+        if (iconId != 0) {
+            Drawable drawable = mContext.getResources().getDrawable(iconId);
+
+            if (drawable != null) {
+                int left = 0;
+                int top = 0;
+                int right = mEventIconSize;
+                int bottom = mEventIconSize;
+                int color = event.getIconColor() == 0 ? mEventTextColor : event.getIconColor();
+
+                drawable.setBounds(left, top, right, bottom);
+                drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+                canvas.save();
+                canvas.translate(rect.right - mEventIconSize - mEventPadding,
+                        +rect.bottom - mEventIconSize - mEventPadding);
+                drawable.draw(canvas);
+                canvas.restore();
+            }
+        }
+    }
 
     /**
      * A class to hold reference to the events and their visual representation. An EventRect is

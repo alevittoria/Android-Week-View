@@ -17,6 +17,8 @@ public class WeekViewEvent {
     private String mName;
     private String mLocation;
     private int mColor;
+    private int mIconId;
+    private int mIconColor;
     private boolean mAllDay;
 
     public WeekViewEvent(){
@@ -99,6 +101,16 @@ public class WeekViewEvent {
         this(id, name, null, startTime, endTime);
     }
 
+    public WeekViewEvent(long id, String name, String location, Calendar startTime, Calendar endTime,
+                         int iconId, int iconColor) {
+        this.mId = id;
+        this.mName = name;
+        this.mLocation = location;
+        this.mStartTime = startTime;
+        this.mEndTime = endTime;
+        this.mIconId = iconId;
+        this.mIconColor = iconColor;
+    }
 
     public Calendar getStartTime() {
         return mStartTime;
@@ -217,5 +229,21 @@ public class WeekViewEvent {
         }
 
         return events;
+    }
+
+    public int getIconId() {
+        return mIconId;
+    }
+
+    public void setIconId(int mIconId) {
+        this.mIconId = mIconId;
+    }
+
+    public int getIconColor() {
+        return mIconColor;
+    }
+
+    public void setIconColor(int mIconColor) {
+        this.mIconColor = mIconColor;
     }
 }

@@ -28,6 +28,7 @@ public class BasicActivity extends BaseActivity {
         endTime.set(Calendar.MONTH, newMonth - 1);
         WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_01));
+        event.setIconId(R.drawable.ic_launcher);
         events.add(event);
 
         startTime = Calendar.getInstance();
