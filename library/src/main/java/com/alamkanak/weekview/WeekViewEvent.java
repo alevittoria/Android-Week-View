@@ -196,6 +196,8 @@ public class WeekViewEvent {
             endTime.set(Calendar.MINUTE, 59);
             WeekViewEvent event1 = new WeekViewEvent(this.getId(), this.getName(), this.getLocation(), this.getStartTime(), endTime, this.isAllDay());
             event1.setColor(this.getColor());
+            event1.setIconId(this.getIconId());
+            event1.setIconColor(this.getIconColor());
             events.add(event1);
 
             // Add other days.
@@ -210,6 +212,8 @@ public class WeekViewEvent {
                 endOfOverDay.set(Calendar.MINUTE, 59);
                 WeekViewEvent eventMore = new WeekViewEvent(this.getId(), this.getName(), null, overDay, endOfOverDay, this.isAllDay());
                 eventMore.setColor(this.getColor());
+                eventMore.setIconColor(this.getIconColor());
+                eventMore.setIconId(this.getIconId());
                 events.add(eventMore);
 
                 // Add next day.
@@ -222,6 +226,8 @@ public class WeekViewEvent {
             startTime.set(Calendar.MINUTE, 0);
             WeekViewEvent event2 = new WeekViewEvent(this.getId(), this.getName(), this.getLocation(), startTime, this.getEndTime(), this.isAllDay());
             event2.setColor(this.getColor());
+            event2.setIconId(this.getIconId());
+            event2.setIconColor(this.getIconColor());
             events.add(event2);
         }
         else{
