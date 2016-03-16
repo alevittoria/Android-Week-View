@@ -896,6 +896,7 @@ public class WeekView extends View {
 
         if (event.getIconId() != 0) {
             availableWidth -= mEventIconSize + mEventPadding;
+            availableHeight -= mEventIconSize ;
         }
 
         // Get text dimensions.
@@ -908,7 +909,9 @@ public class WeekView extends View {
             int availableLineCount = availableHeight / lineHeight;
             do {
                 // Ellipsize text to fit into event rect.
-                textLayout = new StaticLayout(TextUtils.ellipsize(bob, mEventTextPaint, availableLineCount * availableWidth, TextUtils.TruncateAt.END), mEventTextPaint, (int) (rect.right - originalLeft - mEventPadding * 2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                if (event.getIconId() != 0)
+                        availableWidth -= mEventIconSize;
+                    textLayout = new StaticLayout(TextUtils.ellipsize(bob, mEventTextPaint, availableLineCount * availableWidth, TextUtils.TruncateAt.END), mEventTextPaint, (int) (rect.right - originalLeft - mEventPadding * 2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
                 // Reduce line count.
                 availableLineCount--;
@@ -918,7 +921,10 @@ public class WeekView extends View {
 
             // Draw text.
             canvas.save();
-            canvas.translate(originalLeft + mEventPadding, originalTop + mEventPadding);
+            if (event.getIconId() != 0)
+                canvas.translate(originalLeft + mEventPadding + mEventIconSize, originalTop + mEventPadding + mEventIconSize);
+            else
+                canvas.translate(originalLeft + mEventPadding , originalTop + mEventPadding );
             textLayout.draw(canvas);
             canvas.restore();
         }
@@ -945,8 +951,8 @@ public class WeekView extends View {
                 drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
                 canvas.save();
-                canvas.translate(rect.right - mEventIconSize - mEventPadding,
-                        +rect.bottom - mEventIconSize - mEventPadding);
+                canvas.translate(rect.left + mEventPadding,
+                        +rect.top + mEventPadding);
                 drawable.draw(canvas);
                 canvas.restore();
             }

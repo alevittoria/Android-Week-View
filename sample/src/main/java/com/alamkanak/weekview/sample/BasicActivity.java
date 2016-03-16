@@ -42,6 +42,8 @@ public class BasicActivity extends BaseActivity {
         endTime.set(Calendar.MONTH, newMonth-1);
         event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_02));
+        event.setIconId(R.drawable.ic_launcher);
+
         events.add(event);
 
         startTime = Calendar.getInstance();
@@ -63,9 +65,10 @@ public class BasicActivity extends BaseActivity {
         startTime.set(Calendar.YEAR, newYear);
         endTime = (Calendar) startTime.clone();
         endTime.add(Calendar.HOUR_OF_DAY, 2);
-        endTime.set(Calendar.MONTH, newMonth-1);
+        endTime.set(Calendar.MONTH, newMonth - 1);
         event = new WeekViewEvent(2, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_02));
+        event.setIconId(R.drawable.ic_launcher);
         events.add(event);
 
         startTime = Calendar.getInstance();
