@@ -895,8 +895,7 @@ public class WeekView extends View {
         int availableWidth = (int) (rect.right - originalLeft - mEventPadding * 2);
 
         if (event.getIconId() != 0) {
-            availableWidth -= mEventIconSize + mEventPadding;
-            availableHeight -= mEventIconSize ;
+            availableHeight -= mEventIconSize + mEventPadding;
         }
 
         // Get text dimensions.
@@ -909,8 +908,7 @@ public class WeekView extends View {
             int availableLineCount = availableHeight / lineHeight;
             do {
                 // Ellipsize text to fit into event rect.
-                if (event.getIconId() != 0)
-                        availableWidth -= mEventIconSize;
+
                     textLayout = new StaticLayout(TextUtils.ellipsize(bob, mEventTextPaint, availableLineCount * availableWidth, TextUtils.TruncateAt.END), mEventTextPaint, (int) (rect.right - originalLeft - mEventPadding * 2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
                 // Reduce line count.
@@ -922,7 +920,7 @@ public class WeekView extends View {
             // Draw text.
             canvas.save();
             if (event.getIconId() != 0)
-                canvas.translate(originalLeft + mEventPadding + mEventIconSize, originalTop + mEventPadding + mEventIconSize);
+                canvas.translate(originalLeft + mEventPadding, originalTop + mEventPadding + mEventIconSize);
             else
                 canvas.translate(originalLeft + mEventPadding , originalTop + mEventPadding );
             textLayout.draw(canvas);
