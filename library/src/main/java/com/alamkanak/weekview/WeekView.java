@@ -857,6 +857,7 @@ public class WeekView extends View {
                         mEventBackgroundPaint.setColor(mEventRects.get(i).event.getColor() == 0 ? mDefaultEventColor : mEventRects.get(i).event.getColor());
                         canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundPaint);
                         drawEventTitle(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas, top, left);
+                        drawEventIcon(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas);
                     }
                     else
                         mEventRects.get(i).rectF = null;
@@ -896,6 +897,7 @@ public class WeekView extends View {
 
         if (event.getIconId() != 0) {
             availableHeight -= mEventIconSize + mEventPadding;
+            availableWidth -=  mEventIconSize + mEventPadding;
         }
 
         // Get text dimensions.
@@ -908,7 +910,9 @@ public class WeekView extends View {
             int availableLineCount = availableHeight / lineHeight;
             do {
                 // Ellipsize text to fit into event rect.
-
+                if (event.getIconId() != 0) {
+                    availableWidth -=  mEventIconSize;
+                }
                     textLayout = new StaticLayout(TextUtils.ellipsize(bob, mEventTextPaint, availableLineCount * availableWidth, TextUtils.TruncateAt.END), mEventTextPaint, (int) (rect.right - originalLeft - mEventPadding * 2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
                 // Reduce line count.
@@ -920,7 +924,7 @@ public class WeekView extends View {
             // Draw text.
             canvas.save();
             if (event.getIconId() != 0)
-                canvas.translate(originalLeft + mEventPadding, originalTop + mEventPadding + mEventIconSize);
+                canvas.translate(originalLeft + mEventPadding+ mEventIconSize, originalTop + mEventPadding + mEventIconSize);
             else
                 canvas.translate(originalLeft + mEventPadding , originalTop + mEventPadding );
             textLayout.draw(canvas);

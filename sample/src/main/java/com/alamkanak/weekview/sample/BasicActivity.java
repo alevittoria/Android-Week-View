@@ -92,6 +92,7 @@ public class BasicActivity extends BaseActivity {
         startTime.set(Calendar.YEAR, newYear);
         endTime = (Calendar) startTime.clone();
         endTime.add(Calendar.HOUR_OF_DAY, 3);
+        event.setIconId(R.drawable.ic_launcher);
         event = new WeekViewEvent(4, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_04));
         events.add(event);
@@ -128,6 +129,7 @@ public class BasicActivity extends BaseActivity {
         startTime.set(Calendar.YEAR, newYear);
         endTime = (Calendar) startTime.clone();
         endTime.add(Calendar.HOUR_OF_DAY, 23);
+        event.setIconId(R.drawable.ic_launcher);
         event = new WeekViewEvent(7, getEventTitle(startTime),null, startTime, endTime, true);
         event.setColor(getResources().getColor(R.color.event_color_04));
         events.add(event);
@@ -142,6 +144,7 @@ public class BasicActivity extends BaseActivity {
         endTime = (Calendar) startTime.clone();
         endTime.set(Calendar.DAY_OF_MONTH, 10);
         endTime.set(Calendar.HOUR_OF_DAY, 23);
+        event.setIconId(R.drawable.ic_launcher);
         event = new WeekViewEvent(8, getEventTitle(startTime),null, startTime, endTime, true);
         event.setColor(getResources().getColor(R.color.event_color_03));
         events.add(event);
@@ -157,6 +160,7 @@ public class BasicActivity extends BaseActivity {
         startTime.set(Calendar.YEAR, newYear);
         endTime = (Calendar) startTime.clone();
         endTime.set(Calendar.DAY_OF_MONTH, 11);
+        event.setIconId(R.drawable.ic_launcher);
         event = new WeekViewEvent(8, getEventTitle(startTime), null, startTime, endTime, true);
         event.setColor(getResources().getColor(R.color.event_color_01));
         events.add(event);
